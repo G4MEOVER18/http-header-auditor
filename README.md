@@ -1,43 +1,41 @@
 # HTTP Security Header Auditor
 
-A fast, zero-dependency Python 3 tool for auditing HTTP security headers against OWASP recommendations.
+Ein schnelles Python-3-Tool zum Prüfen von HTTP-Sicherheitsheadern — ohne externe Abhängigkeiten, komplett auf Basis der Python-Standardbibliothek (`urllib`, `ssl`, `json`).
 
-No external libraries required — uses only Python stdlib (`urllib`, `ssl`, `json`).
+## Was wird geprüft
 
-## What it checks
-
-### Required Headers
-| Header | Severity | What's checked |
-|--------|----------|----------------|
-| `Strict-Transport-Security` | HIGH | `max-age` ≥ 1 year |
-| `Content-Security-Policy` | HIGH | `default-src` or `script-src` present |
-| `X-Frame-Options` | MEDIUM | `DENY` or `SAMEORIGIN` |
+### Pflicht-Header
+| Header | Schweregrad | Was geprüft wird |
+|--------|-------------|------------------|
+| `Strict-Transport-Security` | HIGH | `max-age` ≥ 1 Jahr |
+| `Content-Security-Policy` | HIGH | `default-src` oder `script-src` vorhanden |
+| `X-Frame-Options` | MEDIUM | `DENY` oder `SAMEORIGIN` |
 | `X-Content-Type-Options` | MEDIUM | `nosniff` |
-| `Referrer-Policy` | LOW | strict value |
-| `Permissions-Policy` | LOW | any value present |
-| `X-XSS-Protection` | INFO | legacy check |
+| `Referrer-Policy` | LOW | strenger Wert gesetzt |
+| `Permissions-Policy` | LOW | beliebiger Wert vorhanden |
+| `X-XSS-Protection` | INFO | Legacy-Check |
 
-### Information Disclosure
-Flags server version/technology headers that aid fingerprinting:
+### Informationsoffenlegung
+Markiert Header, die Server-Version oder Technologie verraten und Fingerprinting erleichtern:
 - `Server`, `X-Powered-By`, `X-AspNet-Version`, `X-AspNetMvc-Version`
 
-## Usage
+## Verwendung
 
 ```bash
-# Basic audit
+# Einfacher Audit
 python audit.py https://example.com
 
-# JSON output (pipe to jq, save to file, etc.)
+# JSON-Ausgabe (an jq weiterleiten, in Datei speichern usw.)
 python audit.py https://example.com --json
 
-# No ANSI colors (for CI/logging)
+# Ohne ANSI-Farben (für CI/Logging)
 python audit.py https://example.com --no-color
 
-# Exit code: 1 if any HIGH severity finding, 0 otherwise
-# → Integrate into CI pipeline to fail builds with missing HSTS/CSP
+# Exit-Code: 1 bei HIGH-Befunden, 0 sonst
+# → In CI-Pipeline einbinden, um Builds mit fehlendem HSTS/CSP fehlzuschlagen
 ```
 
-## Example output
+## Beispielausgabe
 
 ```
 ============================================================
@@ -56,16 +54,16 @@ python audit.py https://example.com --no-color
   HIGH: 2  MEDIUM: 1  LOW: 0  INFO: 0  OK: 1
 ```
 
-## CI Integration
+## CI-Integration
 
 ```yaml
-# GitHub Actions example
+# GitHub Actions Beispiel
 - name: Security header audit
   run: python audit.py https://your-site.com
-  # Fails (exit code 1) if HIGH severity headers are missing
+  # Schlägt fehl (Exit-Code 1), wenn HIGH-Header fehlen
 ```
 
-## License
+## Lizenz
 
 MIT License — Copyright (c) 2026 Yanis Ameseder
 
