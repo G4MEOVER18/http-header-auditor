@@ -1,5 +1,7 @@
 # HTTP Security Header Auditor
 
+[![CI](https://github.com/G4MEOVER18/http-header-auditor/actions/workflows/python-lint.yml/badge.svg)](https://github.com/G4MEOVER18/http-header-auditor/actions/workflows/python-lint.yml)
+
 Ein schnelles Python-3-Tool zum Prüfen von HTTP-Sicherheitsheadern — ohne externe Abhängigkeiten, komplett auf Basis der Python-Standardbibliothek (`urllib`, `ssl`, `json`).
 
 ## Was wird geprüft
